@@ -5,20 +5,18 @@ interface SquareProps {
   content: SquareContent
 }
 
-export class Square extends React.Component<SquareProps> {
-  render() {
-    return (
-      <td className={`cell ${Square.classNameFromContent(this.props.content)}`}>
-        <span className='disc'/>
-      </td>
-    )
-  }
+export function Square(props: SquareProps) {
+  return (
+    <td className={`cell ${classNameFromContent(props.content)}`}>
+      <span className='disc'/>
+    </td>
+  )
+}
 
-  static classNameFromContent(content: SquareContent): string {    
-    switch(content) {
-      case SquareContent.Empty: return "empty"
-      case SquareContent.Black: return "black"
-      case SquareContent.White: return "white"
-    }
+const classNameFromContent = (content: SquareContent) => {    
+  switch(content) {
+    case SquareContent.Empty: return "empty"
+    case SquareContent.Black: return "black"
+    case SquareContent.White: return "white"
   }
 }
