@@ -22,7 +22,7 @@ export enum SquareContent {
   Black, White, Empty
 }
 
-export type BoardContent = [SquareContent]
+export type BoardContent = SquareContent[]
 
 export const emptyBoard: BoardContent = mkEmptyBoard()
 
