@@ -7,7 +7,7 @@ import { Player } from './MoveCalc';
 class App extends React.Component {
   public render() {
     return (
-      <Board content={emptyBoard} player={Player.Black}/>
+      <Board content={emptyBoard} size={8} player={Player.Black} onClick={() => {}}/>
     );
   }
 }

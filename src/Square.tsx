@@ -4,13 +4,14 @@ import { Player } from './MoveCalc';
 
 interface SquareProps {
   content: SquareContent,
-  player: Player
+  player: Player,
+  onClick: () => void,
 }
 
 export function Square(props: SquareProps) {
-  const { content, player } = props
+  const { content, player, onClick } = props
   return (
-    <td className={`cell ${classNameFromContent(content, player)}`}>
+    <td className={`cell ${classNameFromContent(content, player)}`} onClick={onClick}>
       <span className='disc'/>
     </td>
   )

@@ -5,12 +5,13 @@ import * as Enzyme from 'enzyme'
 import * as Adapter from 'enzyme-adapter-react-16'
 import 'jest-extended'
 import { Player } from '../MoveCalc';
+import * as Sinon from 'sinon'
 
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('Square component', () => {
-  const mkComponent = (content: SquareContent, player: Player) => {
-    return Enzyme.shallow(<Square content={content} player={player}/>)
+  const mkComponent = (content: SquareContent, player: Player, onClick = () => {}) => {
+    return Enzyme.shallow(<Square content={content} player={player} onClick={onClick}/>)
   }
 
   const assertClassName = (expectedClassName: string, content: SquareContent, player: Player) => {
@@ -44,5 +45,14 @@ describe('Square component', () => {
 
   it('does not have class name playable if content is BlackCanPlay and player is White', () => {
     expect(mkComponent(SquareContent.BlackCanPlay, Player.White).hasClass('playable')).toBeFalse()
+  })
+
+  it('calls on click when clicked', () => {
+    const onClick = Sinon.stub<[], void>()
+    const component = mkComponent(SquareContent.BlackCanPlay, Player.White, onClick)
+
+    component.simulate('click')
+
+    expect(onClick.called).toBeTrue()
   })
 })
