@@ -1,3 +1,6 @@
+import { BoardContent } from './Model';
+import { nextMovesFn, Player } from './MoveCalc';
+
 function mkEmptyBoard(): any {
   const board = []
   const squareContent = (i: number) => {
@@ -15,11 +18,24 @@ function mkEmptyBoard(): any {
   for(let i = 0; i < 64; ++i) {
     board.push(squareContent(i))
   }
+  setPlayableSquares(board)
   return board
 }
 
+function setPlayableSquares(board: BoardContent): void {
+  const frontier = new Set()
+  for(let i = 0; i < board.length; ++i) {
+    if(board[i] === SquareContent.Empty) {
+      frontier.add(i)
+    }
+  }
+  const nextMoves = nextMovesFn(8)
+  nextMoves(board, frontier, Player.White).forEach(i => board[i] = SquareContent.WhiteCanPlay)
+  nextMoves(board, frontier, Player.Black).forEach(i => board[i] = SquareContent.BlackCanPlay)
+}
+
 export enum SquareContent {
-  Black, White, Empty
+  Black, White, Empty, WhiteCanPlay, BlackCanPlay
 }
 
 export type BoardContent = SquareContent[]

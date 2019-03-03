@@ -1,9 +1,11 @@
 import * as React from 'react'
 import { Square } from './Square'
 import { BoardContent } from './Model'
+import { Player } from './MoveCalc';
 
 interface BoardProps {
-  content: BoardContent
+  content: BoardContent,
+  player: Player
 }
 
 export class Board extends React.Component<BoardProps> {
@@ -37,7 +39,7 @@ export class Board extends React.Component<BoardProps> {
     const index = row * 8
     const rowArray = []
     for(let i = index; i < index + 8; ++i) {
-      rowArray.push(<Square key={i} content={this.props.content[i]}/>)
+      rowArray.push(<Square key={i} content={this.props.content[i]} player={this.props.player}/>)
     }
     return rowArray
   }

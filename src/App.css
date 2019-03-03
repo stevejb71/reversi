@@ -21,3 +21,15 @@
 .cell.black > .disc {
   background: black;
 }
+
+.cell.playable > .disc {
+  opacity: 0.2;
+}
+
+.cell.playable:hover {
+  background: red;
+}
+
+.cell.playable:hover > .disc {
+  opacity: 1.0;
+}
