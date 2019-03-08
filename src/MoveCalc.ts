@@ -42,33 +42,41 @@ function offsetFn(boardSize: number) {
   return offset
 }
 
-function nextMoves(
+function addAll<A>(s: Set<A>, x: Set<A>) {
+  x.forEach(z => s.add(z))
+}
+
+function* nextMoves(
   board: BoardContent,
   frontier: Set<number>,
   player: Player,
-  offset: (index: number, dx: number, dy: number) => number | undefined 
-): Set<number> {
-  const nextMoves = new Set<number>()
+  offset: (index: number, dx: number, dy: number) => number | undefined
+): IterableIterator<{index: number, indicesToFlip: Set<number>}> {
   const playerSquare = squareContentFor(player)
   const otherSquare = squareContentFor(invertPlayer(player))
-  frontier.forEach(index => {
+  for(const index of frontier.values()) {
+    const indicesToFlip = new Set<number>()
     forEachDelta(index, offset, (dx, dy) => {
+      const indicesToFlipForDelta = new Set<number>()
       let nextIndex = offset(index, dx, dy)
       if(nextIndex === undefined || board[nextIndex] !== otherSquare) {
         return
       }
       do {
+        indicesToFlipForDelta.add(nextIndex)
         nextIndex = offset(nextIndex, dx, dy)
       } while(nextIndex !== undefined && board[nextIndex] === otherSquare)
       if(nextIndex !== undefined && board[nextIndex] === playerSquare) {
-        nextMoves.add(index)
+        addAll(indicesToFlip, indicesToFlipForDelta)
       }
     })
-  })
-  return nextMoves
+    if(indicesToFlip.size > 0) {
+      yield {index, indicesToFlip}
+    }
+  }
 }
 
-export type NextMovesFn = (board: BoardContent, frontier: Set<number>, player: Player) => Set<number>
+export type NextMovesFn = (board: BoardContent, frontier: Set<number>, player: Player) => IterableIterator<{index: number, indicesToFlip: Set<number>}>
 
 export function nextMovesFn(boardSize: number): NextMovesFn {
   const offset = offsetFn(boardSize)

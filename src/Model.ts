@@ -30,8 +30,12 @@ function setPlayableSquares(board: BoardContent): void {
     }
   }
   const nextMoves = nextMovesFn(8)
-  nextMoves(board, frontier, Player.White).forEach(i => board[i] = SquareContent.WhiteCanPlay)
-  nextMoves(board, frontier, Player.Black).forEach(i => board[i] = SquareContent.BlackCanPlay)
+  for(const move of nextMoves(board, frontier, Player.White)) {
+    board[move.index] = SquareContent.WhiteCanPlay
+  }
+  for(const move of nextMoves(board, frontier, Player.Black)) {
+    board[move.index] = SquareContent.BlackCanPlay
+  }
 }
 
 export enum SquareContent {

@@ -10,6 +10,35 @@ const indexOf = (x: number, y: number) => x + 5 * y
 
 const nextMoves = nextMovesFn(5)
 
+function toArray<A>(xs: IterableIterator<A>): Array<A> {
+  const a = []
+  for(const x of xs) {
+    a.push(x)
+  }
+  return a
+}
+
+expect.extend({
+  toEqualSet<A>(expected: Set<A>, actual: Set<A>) {
+    const failure = (message: string) => ({
+      pass: false,
+      message: () => message
+    })
+    if(expected.size !== actual.size) {
+      return failure(`Sizes: ${expected.size} !== ${actual.size}`)
+    }
+    for(const e of expected.values()) {
+      if(!actual.has(e)) {
+        return failure(`Actual does not have element ${e}`)
+      }
+    }
+    return {
+      pass: true,
+      message: () => "Expected equal sets"
+    }
+  }
+})
+
 describe('Next moves calculation', () => {
   it('finds moves in all 8 directions', () => {
     const board = [
@@ -21,9 +50,11 @@ describe('Next moves calculation', () => {
     ]
     const frontier = new Set([indexOf(2, 2)])
     
-    const moves = nextMoves(board, frontier, Player.White)
+    const moves = toArray(nextMoves(board, frontier, Player.White))
 
-    expect(moves).toEqual(new Set([indexOf(2, 2)]))
+    expect(moves[0].index).toEqual(12)
+    // @ts-ignore
+    expect(moves[0].indicesToFlip).toEqualSet(new Set([6, 7, 8, 11, 13, 16, 17, 18]))
   })
 
   it('does not find a move on a line where the adjacent piece is empty', () => {
@@ -36,9 +67,9 @@ describe('Next moves calculation', () => {
     ]
     const frontier = new Set([indexOf(2, 2)])
     
-    const moves = nextMoves(board, frontier, Player.White)
+    const moves = toArray(nextMoves(board, frontier, Player.White))
 
-    expect(moves).toEqual(new Set())
+    expect(moves).toBeEmpty()
   })
 
   it('does not find a move on a line where the adjacent piece is the same colour as the player', () => {
@@ -51,9 +82,9 @@ describe('Next moves calculation', () => {
     ]
     const frontier = new Set([indexOf(2, 0)])
     
-    const moves = nextMoves(board, frontier, Player.Black)
+    const moves = toArray(nextMoves(board, frontier, Player.Black))
 
-    expect(moves).toEqual(new Set())
+    expect(moves).toBeEmpty()
   })
 
   it('does not find a move on a line where the end of the board is reached without an empty square', () => {
@@ -66,8 +97,8 @@ describe('Next moves calculation', () => {
     ]
     const frontier = new Set([indexOf(2, 2)])
     
-    const moves = nextMoves(board, frontier, Player.Black)
+    const moves = toArray(nextMoves(board, frontier, Player.Black))
 
-    expect(moves).toEqual(new Set())
+    expect(moves).toBeEmpty()
   })
 })
