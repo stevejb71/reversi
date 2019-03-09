@@ -53,7 +53,6 @@ describe('Next moves calculation', () => {
     const moves = toArray(nextMoves(board, frontier, Player.White))
 
     expect(moves[0].index).toEqual(12)
-    // @ts-ignore
     expect(moves[0].indicesToFlip).toEqualSet(new Set([6, 7, 8, 11, 13, 16, 17, 18]))
   })
 
