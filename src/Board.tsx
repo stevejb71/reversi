@@ -4,7 +4,7 @@ import { BoardContent } from './Model'
 import { Player } from './MoveCalc';
 
 interface BoardProps {
-  content: BoardContent,
+  board: BoardContent
   size: number,
   player: Player,
   onClick: (index: number) => void
@@ -41,7 +41,7 @@ function mkRow(props: BoardProps, row: number) {
   const rowArray = []
   for(let i = index; i < index + props.size; ++i) {
     const onClick = () => props.onClick(i)
-    rowArray.push(<Square key={`square-${i}`} content={props.content[i]} player={props.player} onClick={onClick}/>)
+    rowArray.push(<Square key={`square-${i}`} content={props.board[i]} player={props.player} onClick={onClick}/>)
   }
   return rowArray
 }

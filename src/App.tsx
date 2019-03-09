@@ -1,15 +1,14 @@
 import * as React from 'react';
 import './App.css';
-import { Board } from './Board'
-import { emptyBoard } from './Model'
+import { BoardContainer } from './Board-container'
 import { Player } from './MoveCalc';
+import { Provider } from 'react-redux'
+import { store } from './redux/Store'
 
-class App extends React.Component {
-  public render() {
-    return (
-      <Board content={emptyBoard} size={8} player={Player.Black} onClick={() => {}}/>
-    );
-  }
+export default function App() {
+  return (
+    <Provider store={store}>
+      <BoardContainer size={8} player={Player.Black} onClick={() => {}}/>
+    </Provider>
+  );
 }
-
-export default App;
