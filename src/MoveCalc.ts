@@ -34,10 +34,12 @@ function forEachDelta(
 }
 
 function offsetFn(boardSize: number) {
-  const boardSizeSq = boardSize * boardSize
   function offset(index: number, dx: number, dy: number): number | undefined {
-    const offset = index + dx + boardSize * dy
-    return (offset < 0 || offset >= boardSizeSq) ? undefined : offset
+    const x = index % boardSize
+    const y = index / boardSize
+    return (x + dx < 0 || x + dx >= boardSize) || (y + dy < 0 || y + dy >= boardSize) 
+       ? undefined
+       : index + dx + boardSize * dy
   }
   return offset
 }
@@ -45,6 +47,25 @@ function offsetFn(boardSize: number) {
 function addAll<A>(s: Set<A>, x: Set<A>) {
   x.forEach(z => s.add(z))
 }
+
+function frontierForBoard(
+  board: BoardContent,
+  offset: (index: number, dx: number, dy: number) => number | undefined)
+  : Set<number> {
+  const frontier = new Set<number>()
+  board.forEach((value, index) => {
+    if(value === SquareContent.Empty) {
+      forEachDelta(index, offset, (dx, dy) => {
+        const neighbourIndex = offset(index, dx, dy)
+        if(neighbourIndex !== undefined && board[neighbourIndex] !== SquareContent.Empty) {
+          frontier.add(index)
+        }
+      })
+    }
+  })
+  return frontier
+}
+
 
 function* nextMoves(
   board: BoardContent,
@@ -81,4 +102,11 @@ export type NextMovesFn = (board: BoardContent, frontier: Set<number>, player: P
 export function nextMovesFn(boardSize: number): NextMovesFn {
   const offset = offsetFn(boardSize)
   return (board, frontier, player) => nextMoves(board, frontier, player, offset)
+}
+
+export type FrontierForBoardFn = (board: BoardContent) => Set<number>
+
+export function frontierForBoardFn(boardSize: number): FrontierForBoardFn {
+  const offset = offsetFn(boardSize)
+  return board => frontierForBoard(board, offset)
 }

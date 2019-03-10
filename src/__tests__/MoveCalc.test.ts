@@ -1,6 +1,6 @@
 import { SquareContent } from '../Model'
 import 'jest-extended'
-import { nextMovesFn, Player } from '../MoveCalc'
+import { nextMovesFn, Player, frontierForBoardFn } from '../MoveCalc'
 
 const B = SquareContent.Black
 const W = SquareContent.White
@@ -99,5 +99,22 @@ describe('Next moves calculation', () => {
     const moves = toArray(nextMoves(board, frontier, Player.Black))
 
     expect(moves).toBeEmpty()
+  })
+})
+
+describe('frontier calculation', () => {
+  const frontierForBoard = frontierForBoardFn(4)
+
+  it('is all empty squares adjacent to a non-empty square', () => {
+    const board = [
+      E, E, E, E,
+      E, E, W, W,
+      E, E, B, B,
+      E, E, E, E,
+    ]
+
+    const frontier = frontierForBoard(board)
+
+    expect(frontier).toEqualSet(new Set([1, 2, 3, 5, 9, 13, 14, 15]))
   })
 })
