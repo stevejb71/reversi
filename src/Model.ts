@@ -1,5 +1,5 @@
 import { BoardContent } from './Model';
-import { nextMovesFn, Player } from './MoveCalc';
+import { nextMovesFn, Player, frontierForBoardFn } from './MoveCalc';
 
 function mkEmptyBoard(): any {
   const board = []
@@ -45,4 +45,8 @@ export enum SquareContent {
 export type BoardContent = SquareContent[]
 
 export const emptyBoard: BoardContent = mkEmptyBoard()
+
+export const frontierForBoard = frontierForBoardFn(8)
+
+export const nextMoves = nextMovesFn(8)
 
