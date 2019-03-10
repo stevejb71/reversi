@@ -1,9 +1,12 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import App from '../App';
+import { AppContainer } from '../App-container';
+import { store } from '../redux/Store';
+import { Provider } from 'react-redux';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
+  const cmp = <Provider store={store}><AppContainer/></Provider>
+  ReactDOM.render(cmp, div);
   ReactDOM.unmountComponentAtNode(div);
 });

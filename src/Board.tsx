@@ -18,7 +18,7 @@ export function Board(props: BoardProps) {
 
 function header() {
   const header = [<th key='blank'/>]
-  for(let letter of 'abcdefgh') {
+  for(const letter of 'abcdefgh') {
     header.push(<th key={letter}>{letter}</th>)
   }
   return header
