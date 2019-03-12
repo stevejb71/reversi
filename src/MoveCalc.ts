@@ -1,4 +1,4 @@
-import { BoardContent, SquareContent } from './Model'
+import { SquareContent, Move } from './Model'
 
 export enum Player {
   White, Black
@@ -48,65 +48,43 @@ function addAll<A>(s: Set<A>, x: Set<A>) {
   x.forEach(z => s.add(z))
 }
 
-function frontierForBoard(
-  board: BoardContent,
-  offset: (index: number, dx: number, dy: number) => number | undefined)
-  : Set<number> {
-  const frontier = new Set<number>()
-  board.forEach((value, index) => {
-    if(value === SquareContent.Empty) {
-      forEachDelta(index, offset, (dx, dy) => {
-        const neighbourIndex = offset(index, dx, dy)
-        if(neighbourIndex !== undefined && board[neighbourIndex] !== SquareContent.Empty) {
-          frontier.add(index)
-        }
-      })
-    }
-  })
-  return frontier
-}
-
-
-function* nextMoves(
-  board: BoardContent,
-  frontier: Set<number>,
+function nextMoves(
+  squares: SquareContent[],
   player: Player,
   offset: (index: number, dx: number, dy: number) => number | undefined
-): IterableIterator<{index: number, indicesToFlip: Set<number>}> {
+): Move[] {
+  const moves = []
   const playerSquare = squareContentFor(player)
   const otherSquare = squareContentFor(invertPlayer(player))
-  for(const index of frontier.values()) {
+  for(let index = 0; index < squares.length; ++index) {
+    if(squares[index] !== SquareContent.Empty) {
+      continue
+    }
     const indicesToFlip = new Set<number>()
     forEachDelta(index, offset, (dx, dy) => {
       const indicesToFlipForDelta = new Set<number>()
       let nextIndex = offset(index, dx, dy)
-      if(nextIndex === undefined || board[nextIndex] !== otherSquare) {
+      if(nextIndex === undefined || squares[nextIndex] !== otherSquare) {
         return
       }
       do {
         indicesToFlipForDelta.add(nextIndex)
         nextIndex = offset(nextIndex, dx, dy)
-      } while(nextIndex !== undefined && board[nextIndex] === otherSquare)
-      if(nextIndex !== undefined && board[nextIndex] === playerSquare) {
+      } while(nextIndex !== undefined && squares[nextIndex] === otherSquare)
+      if(nextIndex !== undefined && squares[nextIndex] === playerSquare) {
         addAll(indicesToFlip, indicesToFlipForDelta)
       }
     })
     if(indicesToFlip.size > 0) {
-      yield {index, indicesToFlip}
+      moves.push({index, indicesToFlip})
     }
   }
+  return moves
 }
 
-export type NextMovesFn = (board: BoardContent, frontier: Set<number>, player: Player) => IterableIterator<{index: number, indicesToFlip: Set<number>}>
+export type NextMovesFn = (squares: SquareContent[], player: Player) => Move[]
 
 export function nextMovesFn(boardSize: number): NextMovesFn {
   const offset = offsetFn(boardSize)
-  return (board, frontier, player) => nextMoves(board, frontier, player, offset)
-}
-
-export type FrontierForBoardFn = (board: BoardContent) => Set<number>
-
-export function frontierForBoardFn(boardSize: number): FrontierForBoardFn {
-  const offset = offsetFn(boardSize)
-  return board => frontierForBoard(board, offset)
+  return (board, player) => nextMoves(board, player, offset)
 }

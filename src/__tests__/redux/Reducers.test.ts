@@ -1,25 +1,36 @@
+import { State } from './../../redux/State';
 import { SquareContent } from './../../Model';
 import { UpdateBoardAction } from '../../redux/Actions'
 import { reversiApp } from '../../redux/Reducers'
 import 'jest-extended'
 
 describe('reversiApp reducer', () => {
+  const state: State = {
+    board: {
+      squares: [],
+      nextMoves: []
+    }
+  }
+
   it('if the action is a redux init action then return initialState', () => {
     const action = {type: '@@react/init'}
 
-    const nextState = reversiApp({board: []}, action)
+    const nextState = reversiApp(state, action)
 
-    expect(nextState.board).toEqual([])
+    expect(nextState).toBe(state)
   })
 
   it('updates the state with the new board for update board action', () => {
-    const board = [SquareContent.Black]
+    const board = {
+      squares: [SquareContent.Black],
+      nextMoves: []
+    }
     const action: UpdateBoardAction = {
       type: "@@reversi/UPDATE_BOARD",
       board
     }
 
-    const nextState = reversiApp({board: []}, action)
+    const nextState = reversiApp(state, action)
 
     expect(nextState.board).toBe(board)
   })

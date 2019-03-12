@@ -1,8 +1,10 @@
 import { BoardContent } from './Model';
-import { nextMovesFn, Player, frontierForBoardFn } from './MoveCalc';
+import { nextMovesFn, Player, NextMovesFn } from './MoveCalc';
+
+export const calcNextMoves: NextMovesFn = nextMovesFn(8)
 
 function mkEmptyBoard(): any {
-  const board = []
+  const squares = []
   const squareContent = (i: number) => {
     switch(i) {
       case 27:
@@ -16,37 +18,35 @@ function mkEmptyBoard(): any {
     }
   }
   for(let i = 0; i < 64; ++i) {
-    board.push(squareContent(i))
+    squares.push(squareContent(i))
   }
-  setPlayableSquares(board)
-  return board
-}
-
-function setPlayableSquares(board: BoardContent): void {
-  const frontier = new Set()
-  for(let i = 0; i < board.length; ++i) {
-    if(board[i] === SquareContent.Empty) {
-      frontier.add(i)
-    }
+  const nextWhiteMoves = calcNextMoves(squares, Player.White)
+  for(const {index} of nextWhiteMoves) {
+    squares[index] = SquareContent.WhiteCanPlay
   }
-  const nextMoves = nextMovesFn(8)
-  for(const move of nextMoves(board, frontier, Player.White)) {
-    board[move.index] = SquareContent.WhiteCanPlay
+  const nextBlackMoves = calcNextMoves(squares, Player.Black)
+  for(const {index} of nextBlackMoves) {
+    squares[index] = SquareContent.BlackCanPlay
   }
-  for(const move of nextMoves(board, frontier, Player.Black)) {
-    board[move.index] = SquareContent.BlackCanPlay
+  return {
+    squares,
+    nextMoves: nextBlackMoves
   }
 }
 
 export enum SquareContent {
-  Black, White, Empty, WhiteCanPlay, BlackCanPlay
+  Empty, Black, White, WhiteCanPlay, BlackCanPlay
 }
 
-export type BoardContent = SquareContent[]
+export type Move = {
+  index: number,
+  indicesToFlip: Set<number>
+}
+
+export type BoardContent = {
+  squares: SquareContent[],
+  nextMoves: Move[]
+}
 
 export const emptyBoard: BoardContent = mkEmptyBoard()
-
-export const frontierForBoard = frontierForBoardFn(8)
-
-export const nextMoves = nextMovesFn(8)
 

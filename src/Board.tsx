@@ -36,12 +36,12 @@ function contents(props: BoardProps) {
   return contents
 }
 
-function mkRow(props: BoardProps, row: number) {
-  const index = row * props.size
+function mkRow({board, size, player, onClick}: BoardProps, row: number) {
+  const index = row * size
   const rowArray = []
-  for(let i = index; i < index + props.size; ++i) {
-    const onClick = () => props.onClick(i)
-    rowArray.push(<Square key={`square-${i}`} content={props.board[i]} player={props.player} onClick={onClick}/>)
+  for(let i = index; i < index + size; ++i) {
+    const onClickFn = () => onClick(i)
+    rowArray.push(<Square key={`square-${i}`} content={board.squares[i]} player={player} onClick={onClickFn}/>)
   }
   return rowArray
 }
