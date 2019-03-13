@@ -7,9 +7,11 @@ import 'jest-extended'
 import { Player } from '../MoveCalc';
 import * as Sinon from 'sinon'
 
-Enzyme.configure({ adapter: new Adapter() });
-
 describe('Board component', () => {
+  beforeAll(() => {
+    Enzyme.configure({ adapter: new Adapter() });
+  })
+
   it('calls onClick for the square which has been clicked', () => {
     const onClick = Sinon.stub<[number], void>()
     const board: BoardContent = {
