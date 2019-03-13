@@ -1,14 +1,12 @@
 import * as React from 'react'
-import { Square } from './Square'
 import { BoardContent } from './Model'
-import { Player } from './MoveCalc';
+import { SquareContainer } from './square-container';
 
-export interface BoardProps {
-  readonly board: BoardContent,
-  readonly size: number,
-  readonly player: Player,
-  readonly onClick: (index: number) => void
-}
+export type BoardProps = Readonly<{
+  board: BoardContent,
+  size: number,
+  onClick: (index: number) => void
+}>
 
 export function Board(props: BoardProps) {
   return (
@@ -36,12 +34,12 @@ function contents(props: BoardProps) {
   return contents
 }
 
-function mkRow({board, size, player, onClick}: BoardProps, row: number) {
+function mkRow({board, size, onClick}: BoardProps, row: number) {
   const index = row * size
   const rowArray = []
   for(let i = index; i < index + size; ++i) {
     const onClickFn = () => onClick(i)
-    rowArray.push(<Square key={`square-${i}`} content={board.squares[i]} player={player} onClick={onClickFn}/>)
+    rowArray.push(<SquareContainer key={`square-${i}`} content={board.squares[i]} onClick={onClickFn}/>)
   }
   return rowArray
 }

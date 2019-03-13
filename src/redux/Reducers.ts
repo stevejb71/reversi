@@ -10,7 +10,7 @@ export function reversiApp(state: State = initialState, action: Action | object)
   if(isReversiAction(action)) {
     switch(action.type) {
       case '@@reversi/UPDATE_BOARD':   
-        return {...state, board: action.board}
+        return {...state, board: action.board, currentPlayer: action.player}
     }
   }
   return state

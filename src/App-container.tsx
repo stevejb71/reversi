@@ -3,9 +3,10 @@ import { State } from './redux/State'
 import { App, AppProps } from './App'
 import { updateBoard } from './redux/Actions'
 
-function mapStateToProps(state: State): Pick<AppProps, 'board'> {
+function mapStateToProps(state: State): Pick<AppProps, 'board' | 'currentPlayer'> {
   return {
-    board: state.board
+    board: state.board,
+    currentPlayer: state.currentPlayer
   }
 }
 

@@ -1,11 +1,11 @@
 import { Player } from './../MoveCalc';
 import { BoardContent, emptyBoard } from '../Model'
 
-export interface State {
+export type State = Readonly<{
   board: BoardContent,
   boardSize: number,
   currentPlayer: Player
-}
+}>
 
 export const initialState: State = {
   board: emptyBoard,

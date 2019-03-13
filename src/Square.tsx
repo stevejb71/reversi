@@ -2,14 +2,13 @@ import { SquareContent } from './Model'
 import * as React from 'react'
 import { Player } from './MoveCalc';
 
-interface SquareProps {
+export type SquareProps = Readonly<{
   content: SquareContent,
   player: Player,
   onClick: () => void,
-}
+}>
 
-export function Square(props: SquareProps) {
-  const { content, player, onClick } = props
+export function Square({content, player, onClick}: SquareProps) {
   return (
     <td className={`cell ${classNameFromContent(content, player)}`} onClick={onClick}>
       <span className='disc'/>

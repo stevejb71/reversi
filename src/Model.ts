@@ -31,7 +31,7 @@ function mkEmptyBoard(): any {
 }
 
 export enum SquareContent {
-  Empty, Black, White, WhiteCanPlay, BlackCanPlay
+  Empty = 0, Black = 1, White = 2, BlackCanPlay = 11, WhiteCanPlay = 12
 }
 
 export type Move = {
@@ -39,10 +39,10 @@ export type Move = {
   indicesToFlip: Set<number>
 }
 
-export type BoardContent = {
+export type BoardContent = Readonly<{
   squares: SquareContent[],
   nextMoves: Move[]
-}
+}>
 
 export const emptyBoard: BoardContent = mkEmptyBoard()
 

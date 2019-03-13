@@ -4,7 +4,6 @@ import { SquareContent, BoardContent } from '../Model'
 import * as Enzyme from 'enzyme'
 import * as Adapter from 'enzyme-adapter-react-16'
 import 'jest-extended'
-import { Player } from '../MoveCalc';
 import * as Sinon from 'sinon'
 
 describe('Board component', () => {
@@ -18,7 +17,7 @@ describe('Board component', () => {
       squares: [SquareContent.Black, SquareContent.White, SquareContent.Empty, SquareContent.Empty],
       nextMoves: []
     }
-    const component = Enzyme.mount(<Board board={board} size={2} player={Player.Black} onClick={onClick}/>)
+    const component = Enzyme.shallow(<Board board={board} size={2} onClick={onClick}/>)
 
     const square = component.findWhere(x => x.key() === 'square-2')
     square.simulate('click')

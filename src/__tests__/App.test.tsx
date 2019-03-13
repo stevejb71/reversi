@@ -7,6 +7,9 @@ import * as Enzyme from 'enzyme'
 import * as Adapter from 'enzyme-adapter-react-16'
 import { SquareContent } from '../Model';
 
+// @ts-ignore
+const findSquare = (cmp: any) => (index: number) => cmp.findWhere(x => x.key() === `square-${index}`)
+
 describe('App component', () => {
   beforeAll(() => {
     Enzyme.configure({ adapter: new Adapter() });
@@ -19,17 +22,23 @@ describe('App component', () => {
     ReactDOM.unmountComponentAtNode(div);
   })
 
-  it('updates the square on the board according to the rules when a piece is played', () => {
+  it('updates the the board according to the rules when a piece is played', () => {
     Enzyme.configure({ adapter: new Adapter() });
     const cmp = Enzyme.mount(<Provider store={store}><AppContainer/></Provider>)
-    const squareToPlay = cmp.findWhere(x => x.key() === 'square-19')
+    const squareAt = findSquare(cmp)
+
+    const squareToPlay = squareAt(19)
     squareToPlay.simulate('click')
     cmp.update()
 
     const expectedBlackSquares = [19, 27, 28, 35]
     expectedBlackSquares.forEach(i => {
-      const square = cmp.findWhere(x => x.key() === `square-${i}`)
-      expect(square.props().content).toEqual(SquareContent.Black)
+      expect(squareAt(i).props().content).toEqual(SquareContent.Black)
+    })
+
+    const expectedSquaresWhiteCanPlay = [18, 20, 34]
+    expectedSquaresWhiteCanPlay.forEach(i => {
+      expect(squareAt(i).props().content).toEqual(SquareContent.WhiteCanPlay)
     })
   })
 })

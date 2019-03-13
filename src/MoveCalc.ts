@@ -4,12 +4,16 @@ export enum Player {
   White, Black
 }
 
-function invertPlayer(p: Player): Player {
+export function invertPlayer(p: Player): Player {
   return p === Player.White ? Player.Black : Player.White
 }
 
-function squareContentFor(p: Player): SquareContent {
+export function squareContentFor(p: Player): SquareContent {
   return p === Player.White ? SquareContent.White : SquareContent.Black
+}
+
+export function playableSquareContentFor(p: Player): SquareContent {
+  return p === Player.White ? SquareContent.WhiteCanPlay : SquareContent.BlackCanPlay
 }
 
 function forEachDelta(

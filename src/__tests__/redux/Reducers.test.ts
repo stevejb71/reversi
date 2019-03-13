@@ -30,11 +30,13 @@ describe('reversiApp reducer', () => {
     }
     const action: UpdateBoardAction = {
       type: "@@reversi/UPDATE_BOARD",
-      board
+      board,
+      player: Player.White
     }
 
     const nextState = reversiApp(state, action)
 
     expect(nextState.board).toBe(board)
+    expect(nextState.currentPlayer).toBe(Player.White)
   })
 })
