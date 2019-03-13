@@ -1,27 +1,24 @@
 import { SquareContent } from './Model'
 import * as React from 'react'
-import { Player } from './MoveCalc';
 
 export type SquareProps = Readonly<{
   content: SquareContent,
-  player: Player,
+  hasMove: Boolean,
   onClick: () => void,
 }>
 
-export function Square({content, player, onClick}: SquareProps) {
+export function Square({content, hasMove, onClick}: SquareProps) {
   return (
-    <td className={`cell ${classNameFromContent(content, player)}`} onClick={onClick}>
+    <td className={`cell ${classNameFromContent(content, hasMove)}`} onClick={onClick}>
       <span className='disc'/>
     </td>
   )
 }
 
-const classNameFromContent = (content: SquareContent, player: Player) => {    
+const classNameFromContent = (content: SquareContent, hasMove: Boolean) => {    
   switch(content) {
-    case SquareContent.Empty: return "empty"
+    case SquareContent.Empty: return (hasMove ? "empty playable" : "empty")
     case SquareContent.Black: return "black"
     case SquareContent.White: return "white"
-    case SquareContent.WhiteCanPlay: return player === Player.White ? "playable" : ""
-    case SquareContent.BlackCanPlay: return player === Player.Black ? "playable" : ""
   }
 }

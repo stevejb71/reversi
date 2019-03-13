@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Board } from '../Board'
-import { SquareContent, BoardContent } from '../Model'
+import { SquareContent, BoardContent, Move } from '../Model'
 import * as Enzyme from 'enzyme'
 import * as Adapter from 'enzyme-adapter-react-16'
 import 'jest-extended'
@@ -12,10 +12,10 @@ describe('Board component', () => {
   })
 
   it('calls onClick for the square which has been clicked', () => {
-    const onClick = Sinon.stub<[number], void>()
+    const onClick = Sinon.stub<[Move], void>()
     const board: BoardContent = {
       squares: [SquareContent.Black, SquareContent.White, SquareContent.Empty, SquareContent.Empty],
-      nextMoves: []
+      nextMoves: [{index: 2, indicesToFlip: new Set<number>()}]
     }
     const component = Enzyme.shallow(<Board board={board} size={2} onClick={onClick}/>)
 

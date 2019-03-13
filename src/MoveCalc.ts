@@ -12,10 +12,6 @@ export function squareContentFor(p: Player): SquareContent {
   return p === Player.White ? SquareContent.White : SquareContent.Black
 }
 
-export function playableSquareContentFor(p: Player): SquareContent {
-  return p === Player.White ? SquareContent.WhiteCanPlay : SquareContent.BlackCanPlay
-}
-
 function forEachDelta(
   index: number, 
   offset: (index: number, dx: number, dy: number) => number | undefined,

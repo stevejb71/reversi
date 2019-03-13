@@ -35,10 +35,5 @@ describe('App component', () => {
     expectedBlackSquares.forEach(i => {
       expect(squareAt(i).props().content).toEqual(SquareContent.Black)
     })
-
-    const expectedSquaresWhiteCanPlay = [18, 20, 34]
-    expectedSquaresWhiteCanPlay.forEach(i => {
-      expect(squareAt(i).props().content).toEqual(SquareContent.WhiteCanPlay)
-    })
   })
 })

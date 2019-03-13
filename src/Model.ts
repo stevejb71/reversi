@@ -21,9 +21,6 @@ function mkEmptyBoard(): any {
     squares.push(squareContent(i))
   }
   const nextBlackMoves = calcNextMoves(squares, Player.Black)
-  for(const {index} of nextBlackMoves) {
-    squares[index] = SquareContent.BlackCanPlay
-  }
   return {
     squares,
     nextMoves: nextBlackMoves
@@ -31,17 +28,17 @@ function mkEmptyBoard(): any {
 }
 
 export enum SquareContent {
-  Empty = 0, Black = 1, White = 2, BlackCanPlay = 11, WhiteCanPlay = 12
+  Empty = 0, Black = 1, White = 2
 }
 
-export type Move = {
+export type Move = Readonly<{
   index: number,
-  indicesToFlip: Set<number>
-}
+  indicesToFlip: ReadonlySet<number>
+}>
 
 export type BoardContent = Readonly<{
-  squares: SquareContent[],
-  nextMoves: Move[]
+  squares: ReadonlyArray<SquareContent>,
+  nextMoves: ReadonlyArray<Move>
 }>
 
 export const emptyBoard: BoardContent = mkEmptyBoard()

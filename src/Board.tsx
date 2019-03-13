@@ -1,11 +1,11 @@
 import * as React from 'react'
-import { BoardContent } from './Model'
-import { SquareContainer } from './square-container';
+import { BoardContent, Move } from './Model'
+import { Square } from './Square';
 
 export type BoardProps = Readonly<{
   board: BoardContent,
   size: number,
-  onClick: (index: number) => void
+  onClick: (move: Move) => void
 }>
 
 export function Board(props: BoardProps) {
@@ -38,8 +38,9 @@ function mkRow({board, size, onClick}: BoardProps, row: number) {
   const index = row * size
   const rowArray = []
   for(let i = index; i < index + size; ++i) {
-    const onClickFn = () => onClick(i)
-    rowArray.push(<SquareContainer key={`square-${i}`} content={board.squares[i]} onClick={onClickFn}/>)
+    const move = board.nextMoves.find(m => m.index === i)
+    const onClickFn = move === undefined ? () => {} : () => onClick(move)
+    rowArray.push(<Square key={`square-${i}`} content={board.squares[i]} hasMove={move !== undefined} onClick={onClickFn}/>)
   }
   return rowArray
 }
