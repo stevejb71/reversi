@@ -20,11 +20,7 @@ function mkEmptyBoard(): any {
   for(let i = 0; i < 64; ++i) {
     squares.push(squareContent(i))
   }
-  const nextBlackMoves = calcNextMoves(squares, Player.Black)
-  return {
-    squares,
-    nextMoves: nextBlackMoves
-  }
+  return {squares, nextMoves: calcNextMoves(squares, Player.Black)}
 }
 
 export enum SquareContent {
@@ -42,4 +38,13 @@ export type BoardContent = Readonly<{
 }>
 
 export const emptyBoard: BoardContent = mkEmptyBoard()
+
+export enum PlayerType {
+  Human = 0, Computer = 1
+}
+
+export type PlayerSettings = Readonly<{
+  black: PlayerType,
+  white: PlayerType
+}>
 

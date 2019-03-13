@@ -1,5 +1,5 @@
 import { State } from './../../redux/State';
-import { SquareContent } from './../../Model';
+import { SquareContent, PlayerType } from './../../Model';
 import { UpdateBoardAction } from '../../redux/Actions'
 import { reversiApp } from '../../redux/Reducers'
 import 'jest-extended'
@@ -12,7 +12,11 @@ describe('reversiApp reducer', () => {
       nextMoves: []
     },
     boardSize: 8,
-    currentPlayer: Player.Black
+    player: Player.Black,
+    playerSettings: {
+      black: PlayerType.Human,
+      white: PlayerType.Computer  
+    }
   }
 
   it('if the action is a redux init action then return initialState', () => {
@@ -37,6 +41,6 @@ describe('reversiApp reducer', () => {
     const nextState = reversiApp(state, action)
 
     expect(nextState.board).toBe(board)
-    expect(nextState.currentPlayer).toBe(Player.White)
+    expect(nextState.player).toBe(Player.White)
   })
 })

@@ -8,13 +8,13 @@ import { store } from './redux/Store';
 
 export type AppProps = Readonly<{
   board: BoardContent,
-  currentPlayer: Player,
+  player: Player,
   updateBoard: (board: BoardContent, nextPlayer: Player) => UpdateBoardAction
 }>
 
-export function App({board, updateBoard, currentPlayer}: AppProps) {
+export function App({board, updateBoard, player}: AppProps) {
   const onClick = (move: Move) => {
-    const {board: nextBoard, player: nextPlayer} = play(board.squares.slice(0), move, currentPlayer)
+    const {board: nextBoard, player: nextPlayer} = play(board.squares.slice(0), move, player)
     store.dispatch(updateBoard(nextBoard, nextPlayer))
   }
   return (
@@ -27,9 +27,9 @@ type BoardAndPlayer = Readonly<{
   player: Player
 }>
 
-function play(squares: SquareContent[], {index, indicesToFlip}: Move, currentPlayer: Player): BoardAndPlayer {
-  const playerSquare = squareContentFor(currentPlayer)
-  const nextPlayer = invertPlayer(currentPlayer)
+function play(squares: SquareContent[], {index, indicesToFlip}: Move, player: Player): BoardAndPlayer {
+  const playerSquare = squareContentFor(player)
+  const nextPlayer = invertPlayer(player)
   
   squares[index] = playerSquare
   indicesToFlip.forEach(i => {squares[i] = playerSquare})
