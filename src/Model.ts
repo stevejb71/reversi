@@ -20,10 +20,6 @@ function mkEmptyBoard(): any {
   for(let i = 0; i < 64; ++i) {
     squares.push(squareContent(i))
   }
-  const nextWhiteMoves = calcNextMoves(squares, Player.White)
-  for(const {index} of nextWhiteMoves) {
-    squares[index] = SquareContent.WhiteCanPlay
-  }
   const nextBlackMoves = calcNextMoves(squares, Player.Black)
   for(const {index} of nextBlackMoves) {
     squares[index] = SquareContent.BlackCanPlay

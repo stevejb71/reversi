@@ -3,11 +3,11 @@ import { Square } from './Square'
 import { BoardContent } from './Model'
 import { Player } from './MoveCalc';
 
-interface BoardProps {
-  board: BoardContent
-  size: number,
-  player: Player,
-  onClick: (index: number) => void
+export interface BoardProps {
+  readonly board: BoardContent,
+  readonly size: number,
+  readonly player: Player,
+  readonly onClick: (index: number) => void
 }
 
 export function Board(props: BoardProps) {
@@ -29,7 +29,7 @@ function contents(props: BoardProps) {
   for(let row = 0; row < props.size; row++) {
     contents.push(
       <tr key={row}>
-        <td>{row}</td>{mkRow(props, row)}
+        <td>{row+1}</td>{mkRow(props, row)}
       </tr>
     )
   }

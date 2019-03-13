@@ -1,10 +1,11 @@
 import { connect } from 'react-redux'
 import { State } from './redux/State'
-import { Board } from './Board'
+import { Board, BoardProps } from './Board'
 
-const mapStateToProps = (state: State) => {
+function mapStateToProps(state: State): Pick<BoardProps, 'board' | 'size'> {
   return {
-    board: state.board
+    board: state.board,
+    size: state.boardSize
   }
 }
 

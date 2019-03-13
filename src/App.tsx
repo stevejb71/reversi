@@ -6,15 +6,15 @@ import { BoardContent, SquareContent, calcNextMoves } from './Model';
 import { UpdateBoardAction } from './redux/Actions';
 import { store } from './redux/Store';
 
-interface AppProps {
+export interface AppProps {
   board: BoardContent,
   updateBoard: (board: BoardContent) => UpdateBoardAction
 }
 
-export default function App({board, updateBoard}: AppProps) {
+export function App({board, updateBoard}: AppProps) {
   const onClick = (index: number) => store.dispatch(updateBoard(play(board, index)))
   return (
-      <BoardContainer size={8} player={Player.Black} onClick={onClick}/>
+      <BoardContainer player={Player.Black} onClick={onClick}/>
   )
 }
 

@@ -3,13 +3,16 @@ import { SquareContent } from './../../Model';
 import { UpdateBoardAction } from '../../redux/Actions'
 import { reversiApp } from '../../redux/Reducers'
 import 'jest-extended'
+import { Player } from '../../MoveCalc';
 
 describe('reversiApp reducer', () => {
   const state: State = {
     board: {
       squares: [],
       nextMoves: []
-    }
+    },
+    boardSize: 8,
+    currentPlayer: Player.Black
   }
 
   it('if the action is a redux init action then return initialState', () => {

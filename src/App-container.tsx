@@ -1,15 +1,15 @@
 import { connect } from 'react-redux'
 import { State } from './redux/State'
-import App from './App'
+import { App, AppProps } from './App'
 import { updateBoard } from './redux/Actions'
 
-const mapStateToProps = (state: State) => {
+function mapStateToProps(state: State): Pick<AppProps, 'board'> {
   return {
     board: state.board
   }
 }
 
-const mapDispatchToProps = { updateBoard }
+const mapDispatchToProps: Pick<AppProps, 'updateBoard'> = { updateBoard }
 
 export const AppContainer = connect(
   mapStateToProps,
