@@ -4,6 +4,7 @@ import { UpdateBoardAction } from '../../redux/Actions'
 import { reversiApp } from '../../redux/Reducers'
 import 'jest-extended'
 import { Player } from '../../MoveCalc';
+import { randomComputerPlayer } from 'src/ComputerPlayer';
 
 describe('reversiApp reducer', () => {
   const state: State = {
@@ -16,7 +17,8 @@ describe('reversiApp reducer', () => {
     playerSettings: {
       black: PlayerType.Human,
       white: PlayerType.Computer  
-    }
+    },
+    computerPlayer: randomComputerPlayer
   }
 
   it('if the action is a redux init action then return initialState', () => {

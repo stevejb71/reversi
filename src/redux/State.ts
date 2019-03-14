@@ -1,3 +1,4 @@
+import { ComputerPlayer, randomComputerPlayer } from './../ComputerPlayer';
 import { PlayerSettings, PlayerType } from './../Model';
 import { Player } from './../MoveCalc';
 import { BoardContent, emptyBoard } from '../Model'
@@ -6,7 +7,8 @@ export type State = Readonly<{
   board: BoardContent,
   boardSize: number,
   player: Player,
-  playerSettings: PlayerSettings
+  playerSettings: PlayerSettings,
+  computerPlayer: ComputerPlayer
 }>
 
 export const initialState: State = {
@@ -16,5 +18,6 @@ export const initialState: State = {
   playerSettings: {
     black: PlayerType.Human,
     white: PlayerType.Computer
-  }
+  },
+  computerPlayer: randomComputerPlayer
 }
