@@ -4,7 +4,7 @@ import { UpdateBoardAction } from '../../redux/Actions'
 import { reversiApp } from '../../redux/Reducers'
 import 'jest-extended'
 import { Player } from '../../MoveCalc';
-import { randomComputerPlayer } from 'src/ComputerPlayer';
+import { randomComputerPlayer } from '../../ComputerPlayer';
 
 describe('reversiApp reducer', () => {
   const state: State = {
