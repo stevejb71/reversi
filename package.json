@@ -16,7 +16,6 @@
     "fork-ts-checker-webpack-plugin": "^0.2.8",
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "2.29.0",
-    "jest": "20.0.4",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.8",
     "promise": "8.0.1",
@@ -54,13 +53,14 @@
     "@types/node": "^11.9.5",
     "@types/react": "^16.8.4",
     "@types/react-dom": "^16.8.2",
-    "@types/sinon": "^7.0.8",
+    "@types/sinon": "^7.0.10",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.10.0",
+    "jest": "24.5.0",
     "jest-enzyme": "^7.0.1",
     "jest-extended": "^0.11.1",
-    "sinon": "^7.2.6",
-    "typescript": "^3.3.3333"
+    "sinon": "^7.3.0",
+    "typescript": "^3.3.4"
   },
   "jest": {
     "collectCoverageFrom": [
