@@ -31,9 +31,12 @@ describe('App component', () => {
     squareToPlay.simulate('click')
     cmp.update()
 
-    const expectedBlackSquares = [19, 27, 28, 35]
-    expectedBlackSquares.forEach(i => {
-      expect(squareAt(i).props().content).toEqual(SquareContent.Black)
-    })
+    const actualBlackSquares = []
+    for(let i = 0; i < 64; ++i) {
+      if(squareAt(i).props().content === SquareContent.Black) {
+        actualBlackSquares.push(i)
+      }
+    }
+    expect(actualBlackSquares).toEqual([19, 27, 28, 35])
   })
 })
