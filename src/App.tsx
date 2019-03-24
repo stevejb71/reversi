@@ -1,54 +1,20 @@
 import * as React from 'react';
 import './App.css';
 import { BoardContainer } from './Board-container'
-import { Player, invertPlayer, squareContentFor } from './MoveCalc';
-import { BoardContent, calcNextMoves, Move, SquareContent } from './Model';
-import { UpdateBoardAction } from './redux/Actions';
+import { Player } from './MoveCalc';
+import { BoardContent, Move } from './Model';
+import { MoveAction } from './redux/Actions';
 import { store } from './redux/Store';
 
 export type AppProps = Readonly<{
   board: BoardContent,
   player: Player,
-  updateBoard: (board: BoardContent, nextPlayer: Player) => UpdateBoardAction
+  mkMoveAction: (board: BoardContent, player: Player, move: Move) => MoveAction
 }>
 
-export function App({board, updateBoard, player}: AppProps) {
-  if(false) { //computerMovesNext(playerSettings, player)) {
-    // const move = computerPlayer(player, board)
-    // const {board: nextBoard, player: nextPlayer} = play(board.squares.slice(0), move, player)
-    // store.dispatch(updateBoard(nextBoard, nextPlayer))
-    // return <BoardContainer onClick={(_: Move) => {}}/>
-  } else {
-    const onClick = (move: Move) => {
-      const {board: nextBoard, player: nextPlayer} = play(board.squares.slice(0), move, player)
-      store.dispatch(updateBoard(nextBoard, nextPlayer))
-    }
-    return <BoardContainer onClick={onClick}/>
+export function App({board, player, mkMoveAction}: AppProps) {
+  const onClick = (move: Move) => {
+    store.dispatch(mkMoveAction(board, player, move))
   }
+  return <BoardContainer onClick={onClick}/>
 }
-
-type BoardAndPlayer = Readonly<{
-  board: BoardContent,
-  player: Player
-}>
-
-function play(squares: SquareContent[], {index, indicesToFlip}: Move, player: Player): BoardAndPlayer {
-  const playerSquare = squareContentFor(player)
-  const nextPlayer = invertPlayer(player)
-  
-  squares[index] = playerSquare
-  indicesToFlip.forEach(i => {squares[i] = playerSquare})
-  
-  const nextPlayerMoves = calcNextMoves(squares, nextPlayer)
-  const nextBoard = {squares, nextMoves: nextPlayerMoves}
-  return {board: nextBoard, player: nextPlayer}
-}
-
-// function computerMovesNext(playerSettings: PlayerSettings, player: Player): Boolean {
-//   switch(player) {
-//     case Player.Black:
-//       return playerSettings.black === PlayerType.Computer
-//     case Player.White:
-//       return playerSettings.white === PlayerType.Computer
-//   }
-// }

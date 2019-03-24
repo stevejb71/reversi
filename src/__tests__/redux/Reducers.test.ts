@@ -1,6 +1,6 @@
 import { State } from './../../redux/State';
 import { SquareContent, PlayerType } from './../../Model';
-import { UpdateBoardAction } from '../../redux/Actions'
+import { MoveAction } from '../../redux/Actions'
 import { reversiApp } from '../../redux/Reducers'
 import 'jest-extended'
 import { Player } from '../../MoveCalc';
@@ -34,10 +34,12 @@ describe('reversiApp reducer', () => {
       squares: [SquareContent.Black],
       nextMoves: []
     }
-    const action: UpdateBoardAction = {
-      type: "@@reversi/UPDATE_BOARD",
-      board,
-      player: Player.White
+    const action: MoveAction = {
+      type: "@@reversi/MOVE",
+      payload: {
+        board,
+        player: Player.White
+      }
     }
 
     const nextState = reversiApp(state, action)

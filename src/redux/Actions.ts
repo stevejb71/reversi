@@ -1,22 +1,25 @@
-import { BoardContent } from '../Model'
-import { Player } from '../MoveCalc';
+import { Player, } from '../MoveCalc';
+import { Move, BoardContent, } from './../Model';
+import { play } from '../Play';
 
 // typed actions
 
-export type UpdateBoardAction = Readonly<{
-  type: '@@reversi/UPDATE_BOARD',
-  board: BoardContent,
-  player: Player
+export type MoveAction = Readonly<{
+  type: '@@reversi/MOVE',
+  payload: {
+    board: BoardContent,
+    player: Player
+  }
 }>
 
-export type Action = UpdateBoardAction
+export type Action = MoveAction
 
 // action creators
 
-export function updateBoard(board: BoardContent, nextPlayer: Player): UpdateBoardAction {
+export function mkMoveAction(board: BoardContent, player: Player, move: Move): MoveAction {
   return {
-    type: '@@reversi/UPDATE_BOARD',
-    board,
-    player: nextPlayer
+    type: '@@reversi/MOVE',
+    payload: play(board.squares.slice(0), player, move)
   }
 }
+

@@ -9,8 +9,8 @@ function isReversiAction(x: Action | object): x is Action {
 export function reversiApp(state: State = initialState, action: Action | object): State {
   if(isReversiAction(action)) {
     switch(action.type) {
-      case '@@reversi/UPDATE_BOARD':   
-        return {...state, board: action.board, player: action.player}
+      case '@@reversi/MOVE':   
+        return {...state, ...action.payload}
     }
   }
   return state
