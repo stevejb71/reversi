@@ -48,3 +48,13 @@ export type PlayerSettings = Readonly<{
   white: PlayerType
 }>
 
+export const hashBoard = (board: BoardContent) => {
+  let h = 0
+  let i = 1
+  for(const sq of board.squares) {
+    h += sq.valueOf() * i
+    i += 1
+  }
+  return h
+}
+
