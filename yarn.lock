@@ -8746,6 +8746,11 @@ type-is@~1.6.16:
     media-typer "0.3.0"
     mime-types "~2.1.18"
 
+typed-web-workers@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/typed-web-workers/-/typed-web-workers-2.1.1.tgz#1a2e5879647809e5f1c072990ff9b29d6f509845"
+  integrity sha512-btq2XsP9MD806A85QSdrFfOjTzu1ck6iGxMQsFSNrujVKTgLwfyHq9d5LE0C+FS1mbiqiaaAkkVDNVRxhaHApg==
+
 typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
